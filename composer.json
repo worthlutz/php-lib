@@ -1,0 +1,17 @@
+{
+  "name": "worthlutz/php-lib",
+  "description": "Basic PHP classes",
+  "keywords": ["php"],
+  "homepage": "",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Worth Lutz",
+      "email": "worthlutz@wal3geo.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "PhpLib\\": "src/PhpLib" }
+  }
+}
