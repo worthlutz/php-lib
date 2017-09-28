@@ -1,7 +1,7 @@
 <?php
-namespace LibPhp\Api;
+namespace PhpLib\Api;
 
-use LibPhp\Api\ApiEndpoint_v2;
+use PhpLib\Api\ApiEndpoint_v2;
 
 // This class allows grouping endpoints into nested directories.
 
