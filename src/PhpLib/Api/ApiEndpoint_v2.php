@@ -3,6 +3,14 @@ namespace PhpLib\Api;
 
 abstract class ApiEndpoint_v2 {
 
+  /**
+   * Property: secretKey
+   * A static string which will be set to the same key set in the
+   * API_v2 class so encoding and decoding JWT will work.
+   * This will be done by the API_V2 class when its value is set.
+   */
+  static $secretKey = "ApiEndpoint_v2_key";
+
     /**
    * Property: authorizationRequired
    * A boolean indicating that this endpoint is a protected endpoint.
@@ -67,7 +75,6 @@ abstract class ApiEndpoint_v2 {
   public function hasPublicGet() {
     return $this->publicGet;
   }
-
   //---------------------------------------------------------------------------
   // Abstract Functions
   //---------------------------------------------------------------------------
@@ -77,6 +84,12 @@ abstract class ApiEndpoint_v2 {
   abstract protected function processEndpoint($userInfo);
 
   //---------------------------------------------------------------------------
+  // Static Functions
+  //---------------------------------------------------------------------------
+
+  static function setSecretKey($value) {
+    self::$secretKey = $value;
+  }
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------
 }
