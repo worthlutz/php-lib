@@ -7,9 +7,12 @@ use PhpLib\Api\ApiEndpoint_v2;
 
 abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
 
-  // extending class MUST define a protected 'groupName' property
-  // LogicException will be thrown if not defined
-  //protected $groupName = <name of group directory goes here>;  / string
+  // extending class MUST define the following:
+  //    a static '$namespace' property
+  //    a protected 'groupName' property
+  // LogicException will be thrown if $groupName is not defined
+  static $namespace = __NAMESPACE__;
+  //protected $groupName = "<groupName is not defined>";
 
   /**
    * Constructor: __construct
@@ -25,12 +28,12 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
   }
 
   public function processEndpoint($userInfo) {
-    $endpointNamespace = __NAMESPACE__ . $this->groupName . '\\';
 
     // endpoint is next argument
     // TODO: check for missing endpoint!
     $this->endpoint = array_shift($this->args);
 
+    $endpointNamespace = static::$namespace . "\\" . $this->groupName . '\\';
     $endpointClass = $endpointNamespace . ucfirst($this->endpoint);
 
     if (!class_exists($endpointClass)) {
