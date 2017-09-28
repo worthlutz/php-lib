@@ -2,7 +2,7 @@
   "name": "worthlutz/php-lib",
   "description": "Basic PHP classes",
   "keywords": ["php"],
-  "homepage": "",
+  "homepage": "https://github.com/worthlutz/php-lib",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -13,5 +13,8 @@
   ],
   "autoload": {
     "psr-4": { "PhpLib\\": "src/PhpLib" }
+  },
+  "require": {
+    "firebase/php-jwt": "^5.0"
   }
 }
