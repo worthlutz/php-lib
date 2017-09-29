@@ -9,23 +9,20 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
 
   // extending class MUST define the following:
   //    a static '$namespace' property
-  //    a protected 'groupName' property
-  // LogicException will be thrown if $groupName is not defined
+  //    a static 'groupName' property
+  //
+  // example Endpoint Group:
+  //    namespace MapClickDataApi\endpoints_v2;
+  //    use PhpLib\Api\ApiEndpointGroup_v2;
+  //
+  //    class Eoc extends ApiEndpointGroup_v2 {
+  //      static $namespace = __NAMESPACE__;
+  //      static $groupName = "eoc";  // this is the directory for the endpoints
+  //    }
+
   static $namespace = __NAMESPACE__;
-  //protected $groupName = "<groupName is not defined>";
+  static $groupName = "<groupName is not defined>";
 
-  /**
-   * Constructor: __construct
-   *
-   */
-  final public function __construct($configArray) {
-    parent::__construct($configArray);
-
-    if (is_null($this->groupName)) {
-      $errorMsg = 'No groupName property set in class: ' . get_called_class();
-      throw new \LogicException($errorMsg);
-    }
-  }
 
   public function processEndpoint($userInfo) {
 
@@ -33,7 +30,7 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
     // TODO: check for missing endpoint!
     $this->endpoint = array_shift($this->args);
 
-    $endpointNamespace = static::$namespace . "\\" . $this->groupName . '\\';
+    $endpointNamespace = static::$namespace . "\\" . static::$groupName . "\\";
     $endpointClass = $endpointNamespace . ucfirst($this->endpoint);
 
     if (!class_exists($endpointClass)) {
