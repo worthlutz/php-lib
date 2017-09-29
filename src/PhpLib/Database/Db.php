@@ -1,7 +1,7 @@
 <?php
 namespace PhpLib\Database;
 
-use wiLib\base\Singleton;
+use PhpLib\Base\Singleton;
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ++ This is an abstract parent class for Database access.

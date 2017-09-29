@@ -1,5 +1,5 @@
 <?php
-namespace wiLib\database;
+namespace PhpLib\Database;
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 abstract class Pg_Db extends Database {

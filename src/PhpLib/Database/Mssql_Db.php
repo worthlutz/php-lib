@@ -1,7 +1,6 @@
 <?php
-namespace wiLib/database;
+namespace PhpLib\Database;
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 abstract class Mssql_Db extends Database {
 
     const CLASS_PREFIX = 'mssql_';

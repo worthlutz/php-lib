@@ -1,7 +1,6 @@
 <?php
-namespace wiLib/database;
+namespace PhpLib\Database;
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 abstract class Oci_Db extends Database {
 
     const CLASS_PREFIX = 'oci_';
