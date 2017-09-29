@@ -1,7 +1,7 @@
 <?php
 namespace PhpLib\Database;
 
-abstract class Mssql_Db extends Database {
+abstract class Mssql_Db extends Db {
 
     const CLASS_PREFIX = 'mssql_';
 

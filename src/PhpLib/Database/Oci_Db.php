@@ -1,7 +1,7 @@
 <?php
 namespace PhpLib\Database;
 
-abstract class Oci_Db extends Database {
+abstract class Oci_Db extends Db {
 
     const CLASS_PREFIX = 'oci_';
 

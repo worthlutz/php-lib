@@ -1,8 +1,7 @@
 <?php
 namespace PhpLib\Database;
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-abstract class Pg_Db extends Database {
+abstract class Pg_Db extends Db {
 
     const CLASS_PREFIX = 'pg_';
 
