@@ -149,7 +149,7 @@ class Api_v2 {
     $userInfo = array(
       'username'  => 'anonymous',
       'fullname'  => 'anonymous',
-      'roles'     => arrray()  // empty array is for PUBLIC data
+      'roles'     => array()  // empty array is for PUBLIC data
     );
 
     // TODO: figure out public get here
