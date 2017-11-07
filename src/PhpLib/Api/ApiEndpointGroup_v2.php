@@ -12,7 +12,7 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
   //    a static 'groupName' property
   //
   // example Endpoint Group:
-  //    namespace MapClickDataApi\endpoints_v2;
+  //    namespace MapClickApi\endpoints_v2;
   //    use PhpLib\Api\ApiEndpointGroup_v2;
   //
   //    class Eoc extends ApiEndpointGroup_v2 {
@@ -22,7 +22,6 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
 
   static $namespace = __NAMESPACE__;
   static $groupName = "<groupName is not defined>";
-
 
   public function processEndpoint($userInfo) {
 
