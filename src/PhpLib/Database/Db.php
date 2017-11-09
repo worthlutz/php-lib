@@ -51,6 +51,11 @@ abstract class Db extends Singleton {
     $function = static::CLASS_PREFIX.$fnName;
       //echo "<br/>calling fn: ".static::CLASS_PREFIX.$fnName;
       array_unshift($args, $this->result);
+
+      if (!function_exists($function)) {
+        throw new \Exception("Database function($fnName) does not exist.", 1);
+      }
+
       return call_user_func_array($function, $args);
     }
   // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
