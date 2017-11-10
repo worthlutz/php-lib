@@ -34,7 +34,8 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
 
     if (!class_exists($endpointClass)) {
       // TODO: should this throw an Exception?
-      return "No Endpoint: $this->endpoint";
+      throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 1);
+      //return "No Endpoint: $this->endpoint";
     }
 
     $configArray = array(

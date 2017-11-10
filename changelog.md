@@ -1,8 +1,13 @@
 ### php-lib changelog
 
-#### v0.2.0
+#### v0.1.2
 
-* Database/Db.php - throw an execption when function does not exist
+* Api/ - throw Exception when endpoints are missing
+
+
+#### v0.1.1
+
+* Database/Db.php - throw Exception when function does not exist
 
 
 #### v0.1.0
