@@ -130,7 +130,8 @@ class Api_v2 {
     $endpointClass = $this->endpointNameSpace . ucfirst($this->endpoint);
 
     if (!class_exists($endpointClass)) {
-      return $this->_response("No Endpoint: $this->endpoint", 404);
+      throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 1);
+      //return $this->_response("No Endpoint: $this->endpoint", 404);
     }
 
     $configArray = array(
