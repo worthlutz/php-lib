@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+#### v0.2.0
+
+* remove secretKey from ApiEndpoint_v2 to only have in one place
+
+
 #### v0.1.2
 
 * Api/ - throw Exception when endpoints are missing
