@@ -1,7 +1,7 @@
 <?php
 namespace PhpLib\Api;
 
-use PhpLib\Json\Envelope
+use PhpLib\Json\Envelope;
 
 abstract class ApiEndpoint_v2 {
 
