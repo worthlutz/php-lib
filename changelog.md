@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+####v0.2.1
+
+* add 'error' method to ApiEndpoint_v2
+
+
 #### v0.2.0
 
 * remove secretKey from ApiEndpoint_v2 to only have in one place
