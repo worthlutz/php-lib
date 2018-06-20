@@ -1,6 +1,8 @@
 <?php
 namespace PhpLib\Api;
 
+use PhpLib\Json\Envelope;
+
 abstract class ApiEndpoint_v2 {
 
     /**
@@ -74,6 +76,16 @@ abstract class ApiEndpoint_v2 {
   // This function processes the endpoint.
   // It must be provided by the subclass.
   abstract protected function processEndpoint($userInfo);
+
+  //---------------------------------------------------------------------------
+  // protected Functions
+  //---------------------------------------------------------------------------
+
+  protected function error($message) {
+    $envelope = new Envelope(null, false);
+    $envelope->setMessage($message);
+    return $envelope;
+  }
 
   //---------------------------------------------------------------------------
   // Static Functions
