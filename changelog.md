@@ -1,6 +1,10 @@
 ### php-lib changelog
 
-####v0.3.0
+#### v1.0.0
+
+* release as v1.0.0
+
+#### v0.3.0
 
 * add 'error' method to ApiEndpoint_v2
 
