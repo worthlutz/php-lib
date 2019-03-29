@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+### v1.1.0
+
+* add PATCH method
+
 #### v1.0.0
 
 * release as v1.0.0
