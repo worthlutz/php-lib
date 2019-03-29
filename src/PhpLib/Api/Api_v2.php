@@ -105,6 +105,7 @@ class Api_v2 {
 
     switch($this->method) {
       case 'DELETE':
+      case 'PATCH':
       case 'POST':
       case 'PUT':
         if (strlen($this->requestBody) > 0) {
@@ -130,8 +131,8 @@ class Api_v2 {
     $endpointClass = $this->endpointNameSpace . ucfirst($this->endpoint);
 
     if (!class_exists($endpointClass)) {
-      throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 1);
-      //return $this->_response("No Endpoint: $this->endpoint", 404);
+      //throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 1);
+      return $this->_response("No Endpoint: $this->endpoint", 404);
     }
 
     $configArray = array(
