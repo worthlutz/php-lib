@@ -1,5 +1,11 @@
 ### php-lib changelog
 
+### v1.3.0
+
+* remove Api/Authorization
+* cleanup Authorization in Api_v2 and ApiEndpoint_v2
+* convert to use thrown Exceptions for errors
+
 #### v1.2.0
 
 * add Api/Authorization
