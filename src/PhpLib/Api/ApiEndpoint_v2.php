@@ -86,8 +86,7 @@ abstract class ApiEndpoint_v2 {
   // subclass.
   // IMPORTANT: the extended function MUST call PARENT::processEndpoint()
   // for authorization to work
-  // TODO: remove $config in all endpoints_v2
-  protected function processEndpoint($config) {
+  protected function processEndpoint() {
     // TODO: figure out public GET here
     //AND !($this->method == 'GET' AND $endpoint->hasPublicGet())
 

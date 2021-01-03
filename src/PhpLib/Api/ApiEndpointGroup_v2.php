@@ -23,7 +23,7 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
   static $namespace = __NAMESPACE__;
   static $groupName = "<groupName is not defined>";
 
-  public function processEndpoint($userInfo) {
+  public function processEndpoint() {
 
     // endpoint is next argument
     // TODO: check for missing endpoint!
@@ -49,6 +49,6 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
 
     $endpoint = new $endpointClass($configArray);
 
-    return $endpoint->processEndpoint($userInfo);
+    return $endpoint->processEndpoint();
   }
 }

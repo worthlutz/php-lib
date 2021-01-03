@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+### v2.0
+
+* remove `config` parameter from `processEndpoint` function
+
+
 ### v1.3.0
 
 * remove Api/Authorization

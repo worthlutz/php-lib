@@ -123,7 +123,6 @@ class Api_v2 {
 
       default:
         throw new \Exception('Invalid Method', 405);
-
         break;
     }
   }
@@ -145,7 +144,7 @@ class Api_v2 {
     );
 
     $endpoint = new $endpointClass($configArray);
-    return static::response($endpoint->processEndpoint($configArray));
+    return static::response($endpoint->processEndpoint());
   }
 
   //---------------------------------------------------------------------------
