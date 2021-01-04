@@ -170,6 +170,7 @@ class Api_v2 {
 
   private function getAuthHeader() {
     $header = null;
+
     if (isset($_SERVER['Authorization'])) {
       $header = trim($_SERVER["Authorization"]);
     } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI

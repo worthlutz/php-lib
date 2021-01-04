@@ -3,6 +3,7 @@
 ### v2.0
 
 * remove `config` parameter from `processEndpoint` function
+* remove roles from authorization in ApiEndpoint base class
 
 
 ### v1.3.0
