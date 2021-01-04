@@ -2,10 +2,6 @@
 namespace PhpLib\Api;
 
 use PhpLib\Api\ApiEndpoint_v2;
-use Firebase\JWT\JWT;
-use Firebase\JWT\BeforeValidException;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\SignatureInvalidException;
 
 class Api_v2 {
 
