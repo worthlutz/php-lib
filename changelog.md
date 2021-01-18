@@ -5,6 +5,7 @@
 * remove `config` parameter from `processEndpoint` function
 * remove roles from authorization in ApiEndpoint base class
 * remove unneeded 'use' Firebase from Api_v2
+* add Template class
 
 
 ### v1.3.0
