@@ -11,18 +11,17 @@ use Firebase\JWT\SignatureInvalidException;
 
 abstract class ApiEndpoint_v2 {
 
-    /**
+  /**
    * Property: authorizationRequired
    * A boolean indicating that this endpoint is a protected endpoint.
    */
   protected $authorizationRequired = FALSE;
 
   /**
-   * Property: roles
-   * An array of valid roles for this endpoint.
-   * A protected endpoint should define this array.
+   * Property: jwtPayload
+   * payload from decoding the JWT in the authorization header
    */
-  protected $roles = [];
+  protected $jwtPayload = NULL;
 
   /**
    * Property: publicGet
@@ -45,11 +44,6 @@ abstract class ApiEndpoint_v2 {
    */
   protected $args = Array();
 
-  /**
-   * Property: file
-   * Stores the input of the PUT request
-   */
-   protected $file = Null;
 
   /**
    * Constructor: __construct
@@ -64,20 +58,6 @@ abstract class ApiEndpoint_v2 {
     $this->post_vars    = $configArray['post_vars'];
   }
 
-/*  TODO: are  these needed?
-  public function requiresAuth() {
-    return $this->authorizationRequired;
-  }
-
-  public function getRoles() {
-    return $this->roles;
-  }
-
-  public function hasPublicGet() {
-    return $this->publicGet;
-  }
-*/
-
   //---------------------------------------------------------------------------
   // protected Functions
   //---------------------------------------------------------------------------
@@ -86,25 +66,17 @@ abstract class ApiEndpoint_v2 {
   // subclass.
   // IMPORTANT: the extended function MUST call PARENT::processEndpoint()
   // for authorization to work
-  // TODO: remove $config in all endpoints_v2
-  protected function processEndpoint($config) {
-    // TODO: figure out public GET here
-    //AND !($this->method == 'GET' AND $endpoint->hasPublicGet())
+  protected function processEndpoint() {
+    if ($this->authorizationRequired) {
 
-    if ($this->authorizationRequired AND !$this->isAuthorized($this->roles)) {
-      throw new \Exception("Unauthorized", 401);
+      //if (!($this->isAuthorized() OR ($this->method == 'GET' AND $this->publicGet))) {
+      if (!$this->isAuthorized() AND !($this->method == 'GET' AND $this->publicGet)) {
+        throw new \Exception("Unauthorized", 401);
+      }
     }
   }
 
-  // TODO: remove this and use exceptions?
-  //       or is this for errors where success: false is needed?
-  protected function error($message) {
-    $envelope = new Envelope(null, false);
-    $envelope->setMessage($message);
-    return $envelope;
-  }
-
-  protected function isAuthorized($validRoles) {
+  protected function isAuthorized() {
     if (!$this->authHeader OR empty($this->authHeader)) {
       throw new \Exception('No Authorization Header.', 401);
     }
@@ -121,22 +93,17 @@ abstract class ApiEndpoint_v2 {
 
     $errorMsgPrefix = "JWT decode error: ";
     try {
-      $decoded = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
+      $this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
 
       // debug
-      //$decoded = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
-      //$decoded = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
+      //$this->jwtPayload = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
+      //$this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
 
       // TODO: compare serverName with decoded->data->iss?
       //       to make sure JWT is from same server?
       //$serverName = $_SERVER['SERVER_NAME'];
 
-      foreach ($decoded->data->roles as $role) {
-        if (in_array($role, $validRoles)) {
-          return true;
-        }
-      }
-      return false;
+      return true;
 
     // TODO: fix messages here to more helpful
     } catch (ExpiredException $e) {
@@ -170,7 +137,7 @@ abstract class ApiEndpoint_v2 {
       throw new \Exception($errorMsgPrefix, 401);
 
     } catch (\Exception $e) {
-      echo ($e->getMessage());
+      //echo ($e->getMessage());
       $errorMsgPrefix .= $e->getMessage();
       throw new \Exception($errorMsgPrefix, 401);
     }

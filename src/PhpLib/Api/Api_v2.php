@@ -2,10 +2,6 @@
 namespace PhpLib\Api;
 
 use PhpLib\Api\ApiEndpoint_v2;
-use Firebase\JWT\JWT;
-use Firebase\JWT\BeforeValidException;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\SignatureInvalidException;
 
 class Api_v2 {
 
@@ -123,7 +119,6 @@ class Api_v2 {
 
       default:
         throw new \Exception('Invalid Method', 405);
-
         break;
     }
   }
@@ -145,7 +140,7 @@ class Api_v2 {
     );
 
     $endpoint = new $endpointClass($configArray);
-    return static::response($endpoint->processEndpoint($configArray));
+    return static::response($endpoint->processEndpoint());
   }
 
   //---------------------------------------------------------------------------
@@ -171,6 +166,7 @@ class Api_v2 {
 
   private function getAuthHeader() {
     $header = null;
+
     if (isset($_SERVER['Authorization'])) {
       $header = trim($_SERVER["Authorization"]);
     } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
