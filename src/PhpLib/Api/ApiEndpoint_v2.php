@@ -18,17 +18,29 @@ abstract class ApiEndpoint_v2 {
   protected $authorizationRequired = FALSE;
 
   /**
+   * Property: sameServerOnly
+   * A boolean indicating that the JWT must be issued by this server.
+   */
+  protected $sameServerOnly = FALSE;
+
+  /**
+   * Property: validRoles
+   * An array containing valid roles for this endpoint if authorization is required.
+   */
+  protected $validRoles = [];
+
+  /**
    * Property: jwtPayload
    * payload from decoding the JWT in the authorization header
    */
   protected $jwtPayload = NULL;
 
   /**
-   * Property: publicGet
+   * Property: allowPublicGet
    * A boolean indicating that GET requests are public
    * while requests with other methods are secure.
    */
-  protected $publicGet = FALSE;
+  protected $allowPublicGet = FALSE;
 
   /**
    * Property: method
@@ -68,78 +80,40 @@ abstract class ApiEndpoint_v2 {
   // for authorization to work
   protected function processEndpoint() {
     if ($this->authorizationRequired) {
+      // check for auth header
+      if ($this->authHeader AND !empty($this->authHeader)) {
+        // process header to get jwtPayload
+        processAuthHeader();
 
-      //if (!($this->isAuthorized() OR ($this->method == 'GET' AND $this->publicGet))) {
-      if (!$this->isAuthorized() AND !($this->method == 'GET' AND $this->publicGet)) {
-        throw new \Exception("Unauthorized", 401);
+        if ($this->sameServerOnly) {
+          // make sure JWT is from same server
+          if (!isset($this->jwtPayload['iss'])) {
+            throw new \Exception("JWT is missing 'iss' claim.", 401);
+          }
+          if ($this->jwtPayload['iss'] !== $_SERVER['SERVER_NAME']) {
+            throw new \Exception("JWT is not issued by this server.", 401);
+          }
+        }
+
+        // 'aud' claim is user roles
+        if (!isset($this->jwtPayload['aud'])) {
+          throw new \Exception("JWT is missing 'aud' claim.", 401);
+        }
+        $userRoles = $this->jwtPayload['aud'];
+        if (!is_array($userRoles) {
+          // make single role an array
+          $userRoles = [ $userRoles ];
+        }
+        if (count(array_intersect($this->validRoles, $userRoles)) === 0)  {
+          $message = "No valid role in user roles.";
+          throw new \Exception($message, 403);  // forbidden
+        }
+      } else {
+        // check for allowPublicGet
+        if ($this->method == 'GET' AND !$this->allowPublicGet) {
+          throw new \Exception("Unauthorized", 401);
+        }
       }
-    }
-  }
-
-  protected function isAuthorized() {
-    if (!$this->authHeader OR empty($this->authHeader)) {
-      throw new \Exception('No Authorization Header.', 401);
-    }
-
-    $jwt = $this->getBearerToken();
-    if (is_null($jwt)) {
-      throw new \Exception("No JWT in Header", 401);
-    }
-
-    // debug - makes JWT wrong number of segments
-    //$pos = strpos($jwt, '.');
-    //$pos = strpos($jwt, '.', $pos + 3);
-    //$jwt = substr($jwt, 0, $pos-2);
-
-    $errorMsgPrefix = "JWT decode error: ";
-    try {
-      $this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
-
-      // debug
-      //$this->jwtPayload = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
-      //$this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
-
-      // TODO: compare serverName with decoded->data->iss?
-      //       to make sure JWT is from same server?
-      //$serverName = $_SERVER['SERVER_NAME'];
-
-      return true;
-
-    // TODO: fix messages here to more helpful
-    } catch (ExpiredException $e) {
-      // TODO: handle JWT expired
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
-
-    } catch (BeforeValidException $e) {
-      // TODO: handle being used before 'nbf' or 'iat'
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
-
-    } catch (SignatureInvalidException $e) {
-      // TODO: handle invalid signature
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
-
-    } catch (\UnexpectedValueException $e) {
-      // TODO: handle invalid jwt
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
-
-    } catch (\InvalidArgumentException $e) {
-      // TODO: handle invalid jwt
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
-
-    } catch (\DomainException $e) {
-      // TODO: handle invalid jwt
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
-
-    } catch (\Exception $e) {
-      //echo ($e->getMessage());
-      $errorMsgPrefix .= $e->getMessage();
-      throw new \Exception($errorMsgPrefix, 401);
     }
   }
 
@@ -157,6 +131,60 @@ abstract class ApiEndpoint_v2 {
   }
 
   //---------------------------------------------------------------------------
+
+  private function processAuthHeader() {
+    // get token from header
+    $jwt = $this->getBearerToken();
+    if (is_null($jwt)) {
+      throw new \Exception("No JWT in Header", 401);
+    }
+
+    // decode token and get payload
+    $decodeErrorPrefix = "JWT decode error: ";
+    try {
+      $this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
+      // debug
+      //$this->jwtPayload = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
+      //$this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
+
+    // TODO: fix messages here to more helpful
+    } catch (ExpiredException $e) {
+      // TODO: handle JWT expired
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+
+    } catch (BeforeValidException $e) {
+      // TODO: handle being used before 'nbf' or 'iat'
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+
+    } catch (SignatureInvalidException $e) {
+      // TODO: handle invalid signature
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+
+    } catch (\UnexpectedValueException $e) {
+      // TODO: handle invalid jwt
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+
+    } catch (\InvalidArgumentException $e) {
+      // TODO: handle invalid jwt
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+
+    } catch (\DomainException $e) {
+      // TODO: handle invalid jwt
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+
+    } catch (\Exception $e) {
+      //echo ($e->getMessage());
+      $decodeErrorPrefix .= $e->getMessage();
+      throw new \Exception($decodeErrorPrefix, 401);
+    }
+  }
+
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------
 }
