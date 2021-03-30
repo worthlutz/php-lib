@@ -24,18 +24,20 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
   static $groupName = "<groupName is not defined>";
 
   public function processEndpoint() {
+    // TODO: is check for auth desired here?
+    //       it would make auth required for whole group
 
     // endpoint is next argument
-    // TODO: check for missing endpoint!
     $this->endpoint = array_shift($this->args);
+    if (is_null($this->endpoint)) {
+      throw new \Exception("No Endpoint argument", 400);
+    }
 
     $endpointNamespace = static::$namespace . "\\" . static::$groupName . "\\";
     $endpointClass = $endpointNamespace . ucfirst($this->endpoint);
 
     if (!class_exists($endpointClass)) {
-      // TODO: should this throw an Exception?
-      throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 1);
-      //return "No Endpoint: $this->endpoint";
+      throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 400);
     }
 
     $configArray = array(

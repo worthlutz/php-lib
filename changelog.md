@@ -4,6 +4,8 @@
 
 * add .editorconfig
 * add error property to JSON/Envelope
+* add http code to Api_v2
+* add error handling and todo to ApiEndpointGroup_v2
 
 #### v2.0
 
