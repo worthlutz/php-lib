@@ -1,6 +1,14 @@
 ### php-lib changelog
 
-### v2.0
+#### v2.1.0
+
+* add .editorconfig
+* add error property to JSON/Envelope
+* add http code to Api_v2
+* add error handling and todo to ApiEndpointGroup_v2
+* add sameServerOnly and validRoles properties and checks to ApiEndpoint_v2
+
+#### v2.0
 
 * remove `config` parameter from `processEndpoint` function
 * remove roles from authorization in ApiEndpoint base class
@@ -8,7 +16,7 @@
 * add Template class
 
 
-### v1.3.0
+#### v1.3.0
 
 * remove Api/Authorization
 * cleanup Authorization in Api_v2 and ApiEndpoint_v2

@@ -193,6 +193,7 @@ class Api_v2 {
       200 => 'OK',
       201 => 'Created',
       202 => 'Accepted',
+
       400 => 'Bad Request',
       401 => 'Unauthorized',
       402 => 'Payment Required',
@@ -203,6 +204,7 @@ class Api_v2 {
 
       500 => 'Internal Server Error',
       501 => 'Not Implemented',
+      503 => 'Service Unavailable',
     );
     return (isset($status[$code])) ? $status[$code] : $status[500];
   }
