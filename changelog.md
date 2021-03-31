@@ -3,6 +3,7 @@
 #### v2.1.1
 
 * add getter functions to Json/Envelope
+* add empty README files to all directories
 
 
 #### v2.1.0
