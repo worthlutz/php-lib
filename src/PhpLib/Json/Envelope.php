@@ -7,8 +7,8 @@ class Envelope implements \JsonSerializable {
   private $payload = NULL;
   private $error   = NULL;
 
-  public function __construct($payload, $success=FALSE) {
-    if (isset($payload)) {
+  public function __construct($payload=NULL, $success=FALSE) {
+    if (!is_null($payload)) {
       $this->payload = $payload;
     }
     $this->success = $success;
@@ -17,6 +17,22 @@ class Envelope implements \JsonSerializable {
   public function jsonSerialize() {
     $vars = get_object_vars($this);
     return $vars;
+  }
+
+  public function getError() {
+    return $this->error;
+  }
+
+  public function getMessage() {
+    return $this->message;
+  }
+
+  public function getPayload() {
+    return $this->payload;
+  }
+
+  public function getSuccess() {
+    return $this->success;
   }
 
   public function setError($code, $title, $message) {
@@ -33,5 +49,9 @@ class Envelope implements \JsonSerializable {
 
   public function setPayload($payload) {
     $this->payload = $payload;
+  }
+
+  public function setPayload($success) {
+    $this->payload = $success;
   }
 }
