@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+#### v2.1.2
+
+* add missing ')' in ApiEndpoint_v2
+
+
 #### v2.1.1
 
 * add getter functions to Json/Envelope

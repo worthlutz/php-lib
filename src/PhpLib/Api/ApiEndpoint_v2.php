@@ -100,7 +100,7 @@ abstract class ApiEndpoint_v2 {
           throw new \Exception("JWT is missing 'aud' claim.", 401);
         }
         $userRoles = $this->jwtPayload['aud'];
-        if (!is_array($userRoles) {
+        if (!is_array($userRoles)) {
           // make single role an array
           $userRoles = [ $userRoles ];
         }
