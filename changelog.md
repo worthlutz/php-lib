@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.1
+
+* fix type in Api.php
+
 #### v3.0.0
 
 * change to use kebab-case in API URIs [**BREAKING**]

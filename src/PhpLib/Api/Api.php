@@ -124,7 +124,7 @@ class Api {
   }
 
   public function processApi() {
-    $endpointClass = $this->endpointNameSpace . $self::kebab2StudlyCase($this->endpoint);
+    $endpointClass = $this->endpointNameSpace . self::kebab2StudlyCase($this->endpoint);
 
     if (!class_exists($endpointClass)) {
       throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 404);
