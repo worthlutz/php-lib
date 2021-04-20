@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.3
+
+* fix explode in Api.php
+
 #### v3.0.2
 
 * remove '_v2' from ApiEndpointGroup class

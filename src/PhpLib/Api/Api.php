@@ -225,7 +225,7 @@ class Api {
   //---------------------------------------------------------------------------
 
   static function kebab2StudlyCase($kebabValue) {
-    $values = explode($kebabValue);
+    $values = explode("-", $kebabValue);
     $studlyValue = "";
     foreach ($values as $key => $value) {
       $studlyValue .= ucfirst($value);
