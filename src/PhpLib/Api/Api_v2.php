@@ -124,7 +124,7 @@ class Api_v2 {
   }
 
   public function processApi() {
-    $endpointClass = $this->endpointNameSpace . ucfirst($this->endpoint);
+    $endpointClass = $this->endpointNameSpace . $self::kebab2StudlyCase($this->endpoint);
 
     if (!class_exists($endpointClass)) {
       throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 404);
@@ -221,6 +221,16 @@ class Api_v2 {
     } else {
         return json_last_error_msg();
     }
+  }
+  //---------------------------------------------------------------------------
+
+  static function kebab2StudlyCase($kebabValue) {
+    $values = explode($kebabValue);
+    $studlyValue = "";
+    foreach ($values as $key => $value) {
+      $studlyValue .= ucfirst($value);
+    }
+    return $studlyValue;
   }
   //---------------------------------------------------------------------------
 

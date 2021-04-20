@@ -1,6 +1,7 @@
 <?php
 namespace PhpLib\Api;
 
+use PhpLib\Api\Api_v2;
 use PhpLib\Api\ApiEndpoint_v2;
 
 // This class allows grouping endpoints into nested directories.
@@ -34,7 +35,7 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
     }
 
     $endpointNamespace = static::$namespace . "\\" . static::$groupName . "\\";
-    $endpointClass = $endpointNamespace . ucfirst($this->endpoint);
+    $endpointClass = $endpointNamespace . Api_v2::kebab2StudlyCase($this->endpoint);
 
     if (!class_exists($endpointClass)) {
       throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 400);

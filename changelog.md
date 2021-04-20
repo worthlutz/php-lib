@@ -1,5 +1,11 @@
 ### php-lib changelog
 
+#### v3.0.0
+
+* change to use kebab-case in API URIs [**BREAKING**]
+* remove unused Api/Authorization.php
+
+
 #### v2.1.2
 
 * add missing ')' in ApiEndpoint_v2
