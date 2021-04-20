@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.2
+
+* remove '_v2' from ApiEndpointGroup class
+
 #### v3.0.1
 
 * fix type in Api.php

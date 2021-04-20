@@ -1,22 +1,22 @@
 <?php
 namespace PhpLib\Api;
 
-use PhpLib\Api\Api_v2;
-use PhpLib\Api\ApiEndpoint_v2;
+use PhpLib\Api\Api;
+use PhpLib\Api\ApiEndpoint;
 
 // This class allows grouping endpoints into nested directories.
 
-abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
+abstract class ApiEndpointGroup extends ApiEndpoint{
 
   // extending class MUST define the following:
   //    a static '$namespace' property
   //    a static 'groupName' property
   //
   // example Endpoint Group:
-  //    namespace MapClickApi\endpoints_v2;
-  //    use PhpLib\Api\ApiEndpointGroup_v2;
+  //    namespace MapClickApi\endpoints;
+  //    use PhpLib\Api\ApiEndpointGroup;
   //
-  //    class Eoc extends ApiEndpointGroup_v2 {
+  //    class Eoc extends ApiEndpointGroup {
   //      static $namespace = __NAMESPACE__;
   //      static $groupName = "eoc";  // this is the directory for the endpoints
   //    }
@@ -35,7 +35,7 @@ abstract class ApiEndpointGroup_v2 extends ApiEndpoint_v2{
     }
 
     $endpointNamespace = static::$namespace . "\\" . static::$groupName . "\\";
-    $endpointClass = $endpointNamespace . Api_v2::kebab2StudlyCase($this->endpoint);
+    $endpointClass = $endpointNamespace . Api::kebab2StudlyCase($this->endpoint);
 
     if (!class_exists($endpointClass)) {
       throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 400);
