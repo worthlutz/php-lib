@@ -4,6 +4,7 @@
 
 * change to use kebab-case in API URIs [**BREAKING**]
 * remove unused Api/Authorization.php
+* remove '_v2' from Api filenames and classnames
 
 
 #### v2.1.2

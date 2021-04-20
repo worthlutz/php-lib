@@ -1,17 +1,17 @@
 <?php
 namespace PhpLib\Api;
 
-use PhpLib\Api\ApiEndpoint_v2;
+use PhpLib\Api\ApiEndpoint;
 
-class Api_v2 {
+class Api {
 
   /**
    * Property: secretKey
    * A static string which should be set to the same key set in the
-   * ApiEndpoint_v2 class so encoding and decoding JWT will work.
+   * ApiEndpoint class so encoding and decoding JWT will work.
    * TODO:This would be done for both in the start-api-v2 program.
    */
-  static $secretKey = "Api_v2_key";
+  static $secretKey = "Api_key";
 
   /**
    * Property: authHeader
