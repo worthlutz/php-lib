@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+#### v2.1.3
+
+* remove duplicated method in JSON/Envelop.php
+
+
 #### v2.1.2
 
 * add missing ')' in ApiEndpoint_v2
