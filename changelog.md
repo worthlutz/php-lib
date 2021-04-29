@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.4
+
+* merge branch v2.x fix (v2.1.3)
+
 #### v3.0.3
 
 * fix explode in Api.php
@@ -17,6 +21,11 @@
 * change to use kebab-case in API URIs [**BREAKING**]
 * remove unused Api/Authorization.php
 * remove '_v2' from Api filenames and classnames
+
+
+#### v2.1.3
+
+* remove duplicated method in JSON/Envelop.php
 
 
 #### v2.1.2
