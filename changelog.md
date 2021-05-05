@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+
+#### v2.1.5
+
+* fix missing 'this' in ApiEndpoint_v2
+
 #### v2.1.4
 
 * fix jwtPayload - convert to associative array
