@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.5
+
+* merge branch v2.x fix(v2.1.4)
+
 #### v3.0.4
 
 * merge branch v2.x fix (v2.1.3)
@@ -21,6 +25,11 @@
 * change to use kebab-case in API URIs [**BREAKING**]
 * remove unused Api/Authorization.php
 * remove '_v2' from Api filenames and classnames
+
+
+#### v2.1.4
+
+* fix jwtPayload - convert to associative array
 
 
 #### v2.1.3
