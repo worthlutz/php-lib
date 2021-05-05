@@ -1,7 +1,7 @@
 <?php
 namespace PhpLib\Api;
 
-use PhpLib\Api\Api_v2;
+use PhpLib\Api\Api;
 use PhpLib\Json\Envelope;
 use Firebase\JWT\JWT;
 use Firebase\JWT\BeforeValidException;
@@ -9,7 +9,7 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 
 
-abstract class ApiEndpoint_v2 {
+abstract class ApiEndpoint {
 
   /**
    * Property: authorizationRequired
@@ -83,7 +83,7 @@ abstract class ApiEndpoint_v2 {
       // check for auth header
       if ($this->authHeader AND !empty($this->authHeader)) {
         // process header to get jwtPayload
-        processAuthHeader();
+        $this->processAuthHeader();
 
         if ($this->sameServerOnly) {
           // make sure JWT is from same server
@@ -142,10 +142,14 @@ abstract class ApiEndpoint_v2 {
     // decode token and get payload
     $decodeErrorPrefix = "JWT decode error: ";
     try {
-      $this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
+      $jwtDecoded = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
+
       // debug
-      //$this->jwtPayload = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
-      //$this->jwtPayload = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
+      //$jwtDecoded = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
+      //$jwtDecoded = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
+
+      // convert obj to associative array
+      $this->jwtPayload = (array) $jwtDecoded;
 
     // TODO: fix messages here to more helpful
     } catch (ExpiredException $e) {

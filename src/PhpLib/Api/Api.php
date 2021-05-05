@@ -1,17 +1,17 @@
 <?php
 namespace PhpLib\Api;
 
-use PhpLib\Api\ApiEndpoint_v2;
+use PhpLib\Api\ApiEndpoint;
 
-class Api_v2 {
+class Api {
 
   /**
    * Property: secretKey
    * A static string which should be set to the same key set in the
-   * ApiEndpoint_v2 class so encoding and decoding JWT will work.
+   * ApiEndpoint class so encoding and decoding JWT will work.
    * TODO:This would be done for both in the start-api-v2 program.
    */
-  static $secretKey = "Api_v2_key";
+  static $secretKey = "Api_key";
 
   /**
    * Property: authHeader
@@ -124,7 +124,7 @@ class Api_v2 {
   }
 
   public function processApi() {
-    $endpointClass = $this->endpointNameSpace . ucfirst($this->endpoint);
+    $endpointClass = $this->endpointNameSpace . self::kebab2StudlyCase($this->endpoint);
 
     if (!class_exists($endpointClass)) {
       throw new \Exception("No Endpoint - missing class =  " . $endpointClass, 404);
@@ -221,6 +221,16 @@ class Api_v2 {
     } else {
         return json_last_error_msg();
     }
+  }
+  //---------------------------------------------------------------------------
+
+  static function kebab2StudlyCase($kebabValue) {
+    $values = explode("-", $kebabValue);
+    $studlyValue = "";
+    foreach ($values as $key => $value) {
+      $studlyValue .= ucfirst($value);
+    }
+    return $studlyValue;
   }
   //---------------------------------------------------------------------------
 

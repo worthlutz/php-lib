@@ -1,5 +1,27 @@
 ### php-lib changelog
 
+#### v3.0.0
+
+* merge branch v2.x fix(v2.1.4)
+* merge branch v2.x fix (v2.1.3)
+* fix explode in Api.php
+* remove '_v2' from ApiEndpointGroup class
+* fix type in Api.php
+* change to use kebab-case in API URIs [**BREAKING**]
+* remove unused Api/Authorization.php
+* remove '_v2' from Api filenames and classnames [**BREAKING**]
+
+
+#### v2.1.4
+
+* fix jwtPayload - convert to associative array
+
+
+#### v2.1.3
+
+* remove duplicated method in JSON/Envelop.php
+
+
 #### v2.1.2
 
 * add missing ')' in ApiEndpoint_v2

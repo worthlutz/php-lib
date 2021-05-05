@@ -47,10 +47,6 @@ class Envelope implements \JsonSerializable {
     $this->message = $message;
   }
 
-  public function setPayload($payload) {
-    $this->payload = $payload;
-  }
-
   public function setPayload($success) {
     $this->payload = $success;
   }
