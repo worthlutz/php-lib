@@ -83,7 +83,7 @@ abstract class ApiEndpoint {
       // check for auth header
       if ($this->authHeader AND !empty($this->authHeader)) {
         // process header to get jwtPayload
-        processAuthHeader();
+        $this->processAuthHeader();
 
         if ($this->sameServerOnly) {
           // make sure JWT is from same server

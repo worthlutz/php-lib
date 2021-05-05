@@ -1,30 +1,15 @@
 ### php-lib changelog
 
-#### v3.0.5
-
-* merge branch v2.x fix(v2.1.4)
-
-#### v3.0.4
-
-* merge branch v2.x fix (v2.1.3)
-
-#### v3.0.3
-
-* fix explode in Api.php
-
-#### v3.0.2
-
-* remove '_v2' from ApiEndpointGroup class
-
-#### v3.0.1
-
-* fix type in Api.php
-
 #### v3.0.0
 
+* merge branch v2.x fix(v2.1.4)
+* merge branch v2.x fix (v2.1.3)
+* fix explode in Api.php
+* remove '_v2' from ApiEndpointGroup class
+* fix type in Api.php
 * change to use kebab-case in API URIs [**BREAKING**]
 * remove unused Api/Authorization.php
-* remove '_v2' from Api filenames and classnames
+* remove '_v2' from Api filenames and classnames [**BREAKING**]
 
 
 #### v2.1.4
