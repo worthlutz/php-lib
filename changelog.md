@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+#### v2.1.4
+
+* fix jwtPayload - convert to associative array
+
+
 #### v2.1.3
 
 * remove duplicated method in JSON/Envelop.php
