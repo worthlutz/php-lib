@@ -142,11 +142,11 @@ abstract class ApiEndpoint {
     // decode token and get payload
     $decodeErrorPrefix = "JWT decode error: ";
     try {
-      $jwtDecoded = JWT::decode($jwt, Api_v2::$secretKey, array('HS512'));
+      $jwtDecoded = JWT::decode($jwt, Api::$secretKey, array('HS512'));
 
       // debug
       //$jwtDecoded = JWT::decode($jwt, 'bad key', array('HS512'));  // SignatureInvalidException
-      //$jwtDecoded = JWT::decode($jwt, Api_v2::$secretKey);         // UnexpectedValueException
+      //$jwtDecoded = JWT::decode($jwt, Api::$secretKey);         // UnexpectedValueException
 
       // convert obj to associative array
       $this->jwtPayload = (array) $jwtDecoded;

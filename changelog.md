@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.1
+
+* remove '_v2' in ApiEndpoint.php
+
 #### v3.0.0
 
 * merge branch v2.x fix(v2.1.4)
