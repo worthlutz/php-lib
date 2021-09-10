@@ -24,6 +24,12 @@ abstract class ApiEndpoint {
   protected $sameServerOnly = FALSE;
 
   /**
+   * Property: validClients
+   * An array containing valid cliients for this endpoint if authorization is required.
+   */
+  protected $validClients = [];
+
+  /**
    * Property: validRoles
    * An array containing valid roles for this endpoint if authorization is required.
    */
@@ -56,6 +62,11 @@ abstract class ApiEndpoint {
    */
   protected $args = Array();
 
+  /**
+   * Property: apiID
+   * string id for identifing the api - set in constructor if set
+   */
+  protected $apiId = '';
 
   /**
    * Constructor: __construct
@@ -68,6 +79,9 @@ abstract class ApiEndpoint {
     $this->requestBody  = $configArray['requestBody'];
     $this->get_vars     = $configArray['get_vars'];
     $this->post_vars    = $configArray['post_vars'];
+    if (isset($configArray['apiId'])) {
+      $this->apiId = $configArray['apiId'];
+    }
   }
 
   //---------------------------------------------------------------------------
@@ -85,6 +99,14 @@ abstract class ApiEndpoint {
         // process header to get jwtPayload
         $this->processAuthHeader();
 
+        // 'aud' claim is the API
+        if (!isset($this->jwtPayload['aud'])) {
+          throw new \Exception("JWT is missing 'aud' claim.", 401);
+        }
+        if ($this->jwtPayload['aud']) != $this->apiId) {
+          throw new \Exception("JWT 'aud'claim is not this API.", 401);
+        }
+
         if ($this->sameServerOnly) {
           // make sure JWT is from same server
           if (!isset($this->jwtPayload['iss'])) {
@@ -95,19 +117,31 @@ abstract class ApiEndpoint {
           }
         }
 
-        // 'aud' claim is user roles
-        if (!isset($this->jwtPayload['aud'])) {
-          throw new \Exception("JWT is missing 'aud' claim.", 401);
+        if ($this->validClients) {
+          if (!isset($this->jwtPayload['client_id'])) {
+            throw new \Exception("JWT is missing 'client_id' claim.", 401);
+          }
+          if (in_array($this->jwtPayload['client_id'], $this->validClients))  {
+            $message = "JWT claim 'client_id' is not a valid client.";
+            throw new \Exception($message, 403);  // forbidden
+          }
         }
-        $userRoles = $this->jwtPayload['aud'];
-        if (!is_array($userRoles)) {
-          // make single role an array
-          $userRoles = [ $userRoles ];
+
+        if ($this->validRoles) {
+          if (!isset($this->jwtPayload['roles'])) {
+            throw new \Exception("JWT is missing 'roles' claim.", 401);
+          }
+          $userRoles = $this->jwtPayload['roles'];
+          if (!is_array($userRoles)) {
+            // make single role an array
+            $userRoles = [ $userRoles ];
+          }
+          if (count(array_intersect($this->validRoles, $userRoles)) === 0)  {
+            $message = "No valid role in user roles.";
+            throw new \Exception($message, 403);  // forbidden
+          }
         }
-        if (count(array_intersect($this->validRoles, $userRoles)) === 0)  {
-          $message = "No valid role in user roles.";
-          throw new \Exception($message, 403);  // forbidden
-        }
+
       } else {
         // check for allowPublicGet
         if ($this->method == 'GET' AND !$this->allowPublicGet) {
