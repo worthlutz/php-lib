@@ -67,7 +67,7 @@ class Api {
    * Constructor: __construct
    * Allow for CORS, assemble and pre-process the data
    */
-  public function __construct($endpointNameSpace) {
+  public function __construct($endpointNameSpace, $apiId='API') {
     header("Access-Control-Allow-Orgin: *");
     header("Access-Control-Allow-Methods: *");
     header("Content-Type: application/json");
@@ -136,7 +136,8 @@ class Api {
       'args' =>           $this->args,
       'requestBody' =>    $this->requestBody,
       'get_vars' =>       $this->get_vars,
-      'post_vars' =>      $this->post_vars
+      'post_vars' =>      $this->post_vars,
+      'apiId' =>          $apiId
     );
 
     $endpoint = new $endpointClass($configArray);

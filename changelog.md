@@ -1,5 +1,10 @@
 ### php-lib changelog
 
+#### v3.0.2
+
+* fix authorization in ApiEndpoint.php
+* add apiId to Api.php
+
 #### v3.0.1
 
 * remove '_v2' in ApiEndpoint.php
