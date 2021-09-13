@@ -24,6 +24,7 @@ abstract class ApiEndpointGroup extends ApiEndpoint{
   static $namespace = __NAMESPACE__;
   static $groupName = "<groupName is not defined>";
 
+
   public function processEndpoint() {
     // TODO: is check for auth desired here?
     //       it would make auth required for whole group
@@ -47,7 +48,8 @@ abstract class ApiEndpointGroup extends ApiEndpoint{
       'args' =>           $this->args,
       'requestBody' =>    $this->requestBody,
       'get_vars' =>       $this->get_vars,
-      'post_vars' =>      $this->post_vars
+      'post_vars' =>      $this->post_vars,
+      'apiId' =>          $this->apiId
     );
 
     $endpoint = new $endpointClass($configArray);

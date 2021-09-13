@@ -73,15 +73,14 @@ abstract class ApiEndpoint {
    *
    */
   public function __construct($configArray) {
+    $this->configArray = $configArray;
     $this->authHeader   = $configArray['authHeader'];
     $this->method       = $configArray['method'];
     $this->args         = $configArray['args'];
     $this->requestBody  = $configArray['requestBody'];
     $this->get_vars     = $configArray['get_vars'];
     $this->post_vars    = $configArray['post_vars'];
-    if (isset($configArray['apiId'])) {
-      $this->apiId = $configArray['apiId'];
-    }
+    $this->apiId = $configArray['apiId'];
   }
 
   //---------------------------------------------------------------------------
@@ -103,7 +102,7 @@ abstract class ApiEndpoint {
         if (!isset($this->jwtPayload['aud'])) {
           throw new \Exception("JWT is missing 'aud' claim.", 401);
         }
-        if ($this->jwtPayload['aud']) != $this->apiId) {
+        if ($this->jwtPayload['aud'] != $this->apiId) {
           throw new \Exception("JWT 'aud'claim is not this API.", 401);
         }
 
