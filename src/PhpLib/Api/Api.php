@@ -64,15 +64,25 @@ class Api {
   protected $endpointNameSpace = '';
 
   /**
+   * Property: apiID
+   * string id for identifing the api - set in constructor
+   */
+  protected $apiId = 'API';
+
+  /**
    * Constructor: __construct
    * Allow for CORS, assemble and pre-process the data
    */
-  public function __construct($endpointNameSpace, $apiId='API') {
+  public function __construct($endpointNameSpace, $apiId=NULL) {
     header("Access-Control-Allow-Orgin: *");
     header("Access-Control-Allow-Methods: *");
     header("Content-Type: application/json");
 
     $this->endpointNameSpace = $endpointNameSpace;
+
+    if (isset($apiId)) {
+      $this->apiId = $apiId;
+    }
 
     // authorization header from request
     $this->authHeader = $this->getAuthHeader();
@@ -137,7 +147,7 @@ class Api {
       'requestBody' =>    $this->requestBody,
       'get_vars' =>       $this->get_vars,
       'post_vars' =>      $this->post_vars,
-      'apiId' =>          $apiId
+      'apiId' =>          $this->apiId
     );
 
     $endpoint = new $endpointClass($configArray);

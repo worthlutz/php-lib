@@ -1,5 +1,9 @@
 ### php-lib changelog
 
+#### v3.0.3
+
+* fix handling of apiId
+
 #### v3.0.2
 
 * fix authorization in ApiEndpoint.php
