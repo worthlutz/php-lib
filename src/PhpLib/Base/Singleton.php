@@ -3,9 +3,9 @@ namespace PhpLib\Base;
 
 abstract class Singleton {
 
-    protected function _construct() {}
+    protected function _construct($config=NULL) {}
 
-    final public static function getInstance($config) {
+    final public static function getInstance($config=NULL) {
         static $instances = array();
         $className = get_called_class();
         if ( !isset($instances[$className]) ) {

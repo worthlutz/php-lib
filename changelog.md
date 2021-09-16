@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.1.1
+
+* fix function arguments problem in Base/Singleton
+
 #### v3.1.0
 
 * add config variable to Base/Singleton
