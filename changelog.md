@@ -1,4 +1,9 @@
-### php-lib changelog
+### changelog for php-lib
+
+#### v3.1.0
+
+* add config variable to Base/Singleton
+* update .editorconfig
 
 #### v3.0.3
 
