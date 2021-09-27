@@ -14,6 +14,19 @@ abstract class Pg_Db extends Db {
     protected $user;
     protected $pass;
 
+
+    protected function __construct($config=NULL) {
+      if ($config) {
+        // set pg connection parameters
+        $this->host = $config['host'];
+        $this->port = isset($config['port']) ? $config['port'] : "5432";
+        $this->name = $config['name'];
+        $this->user = $config['user'];
+        $this->pass = $config['pass'];
+      }
+      parent::__construct($config);
+    }
+
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ++ connects to the PostgreSQL Database
     // +++ called by __construct in parent
@@ -26,7 +39,6 @@ abstract class Pg_Db extends Db {
         if (!is_null($this->port)) {
             $connectString .= ' port='.$this->port;
         }
-
         $this->linkid = @pg_connect($connectString);
         if (!$this->linkid) {
             $this->lastError= "Could not connect to the PostgreSQL database(".

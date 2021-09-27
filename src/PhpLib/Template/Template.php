@@ -3,7 +3,7 @@
 //   License: public domain
 //   modified to php5 - wal3
 //     - remove deprecated "var" keyword
-//     - to use  _construct
+//     - to use  __construct
 
 namespace PhpLib\Template;
 

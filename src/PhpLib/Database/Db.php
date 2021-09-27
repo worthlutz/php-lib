@@ -27,8 +27,8 @@ abstract class Db extends Singleton {
   // ++ constructor for Singleton Instance
   // +++ connects to the database
 
-  protected function __construct() {
-
+  protected function __construct($config=NULL) {
+    parent::__construct($config);
     // connect should throw exception on failure
     // note that will crash 1st call to Db::getInstance() !!!
     $this->connect();
