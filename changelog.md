@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.1.2
+
+* fix __construct problems in databse
+
 #### v3.1.1
 
 * fix function arguments problem in Base/Singleton

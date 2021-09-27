@@ -3,7 +3,7 @@ namespace PhpLib\Base;
 
 abstract class Singleton {
 
-    protected function _construct($config=NULL) {}
+    protected function __construct($config=NULL) {}
 
     final public static function getInstance($config=NULL) {
         static $instances = array();
