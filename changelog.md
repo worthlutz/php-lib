@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.2.0
+
+* add ability to force query string keys to a particular case
+
 #### v3.1.2
 
 * fix __construct problems in databse

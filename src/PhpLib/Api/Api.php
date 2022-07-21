@@ -72,8 +72,9 @@ class Api {
   /**
    * Constructor: __construct
    * Allow for CORS, assemble and pre-process the data
+   *  $queryKeyCase = CASE_UPPER | CASE_LOWER  (php constants not strings)
    */
-  public function __construct($endpointNameSpace, $apiId=NULL) {
+  public function __construct($endpointNameSpace, $apiId=NULL, $queryKeyCase=NULL) {
     header("Access-Control-Allow-Orgin: *");
     header("Access-Control-Allow-Methods: *");
     header("Content-Type: application/json");
@@ -101,7 +102,13 @@ class Api {
 
     // get api args extracted by .htaccess rewrite
     $apiArgs = $_GET['api_args'];
+    unset($_GET['api_args']);
     $this->args = explode('/', trim($apiArgs, '/'));
+
+    // adjust case of remaining $_GET keys if needed
+    if ($queryKeyCase == CASE_UPPER or $queryKeyCase == CASE_LOWER) {
+      array_change_key_case($_GET, $queryKeyCase);
+    }
 
     // endpoint is 1st arg
     $this->endpoint = array_shift($this->args);
