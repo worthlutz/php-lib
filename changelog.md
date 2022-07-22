@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.2.1
+
+* fix problem with use of array_change_key_case
+
 #### v3.2.0
 
 * add ability to force query string keys to a particular case

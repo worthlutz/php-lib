@@ -107,7 +107,7 @@ class Api {
 
     // adjust case of remaining $_GET keys if needed
     if ($queryKeyCase == CASE_UPPER or $queryKeyCase == CASE_LOWER) {
-      array_change_key_case($_GET, $queryKeyCase);
+      $_GET = array_change_key_case($_GET, $queryKeyCase);
     }
 
     // endpoint is 1st arg
