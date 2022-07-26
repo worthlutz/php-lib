@@ -21,18 +21,14 @@ class PostGIS_Db extends Pg_Db {
     ";
     //echo("\n ++ $sql ++ ");
 
-    try {
-      $this->query($sql);
-          $r = $this->fetch_assoc();
-      if ($r) {
-          return $r['geometrytype'];
-      } else {
-          // nothing found..... or no rows?
-          return false;
-      }
-    } catch (Exception $e) {
-      $this->lastError = $e->getMessage();
-      return false;
+    $this->query($sql);
+    $r = $this->fetch_assoc();
+    if ($r) {
+      return $r['geometrytype'];
+    } else {
+      // nothing found..... or no rows?
+      $this->lastError = "Cannot get GeometryType(".static::GEOM_COLUMN.") from ($table)";
+      $this->throwDbException();
     }
   }
   // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,20 +42,14 @@ class PostGIS_Db extends Pg_Db {
     ";
     //echo("\n ++ $sql ++ ");
 
-    try {
-      $this->query($sql);
-      $r = $this->fetch_assoc();
-      if ($r) {
-          return $r['srid'];
-      } else {
-          // nothing found.....
-          // TODO: what if there are no rows in table?
-          //       maybe return -1 instead of false
-          return false;
-      }
-    } catch (Exception $e) {
-      $this->lastError = $e->getMessage();
-      return FALSE;
+    $this->query($sql);
+    $r = $this->fetch_assoc();
+    if ($r) {
+      return $r['srid'];
+    } else {
+      // nothing found..... or no rows?
+      $this->lastError = "Cannot get ST_SRID(".static::GEOM_COLUMN.") from ($table)";
+      $this->throwDbException();
     }
   }
   // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
