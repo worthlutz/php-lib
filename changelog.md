@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.3.0
+
+* make handling of exceptions in Database classes consistent
+
 #### v3.2.1
 
 * fix problem with use of array_change_key_case

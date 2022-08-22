@@ -69,5 +69,18 @@ abstract class Db extends Singleton {
     return $this->lastError;
   }
   // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // +++ This function creates a new detail exception with the last error and
+  //     includes the previous exception chain passed in. Then it throws a new
+  //     final exception with a generic message.
+
+  protected function throwDbException(Throwable $previous = null) {
+    // create last detail exception
+    $errorCode = 500;
+    $msg = "Database Error: " . $this->getLastError();
+    $e = new \Exception($msg, $errorCode, $previous);
+    // throw final exception for db_class with generic error message at top of stack
+    throw new \Exception("Error retrieving data", $errorCode, $e);
+  }
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
 ?>
