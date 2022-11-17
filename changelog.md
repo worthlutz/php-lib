@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.3.1
+
+* fix JWT client_id check in ApiEndpoint
+
 #### v3.3.0
 
 * make handling of exceptions in Database classes consistent

@@ -120,7 +120,7 @@ abstract class ApiEndpoint {
           if (!isset($this->jwtPayload['client_id'])) {
             throw new \Exception("JWT is missing 'client_id' claim.", 401);
           }
-          if (in_array($this->jwtPayload['client_id'], $this->validClients))  {
+          if (!in_array($this->jwtPayload['client_id'], $this->validClients))  {
             $message = "JWT claim 'client_id' is not a valid client.";
             throw new \Exception($message, 403);  // forbidden
           }
