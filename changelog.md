@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.3.2
+
+* fix type of argument in throwDbException
+
 #### v3.3.1
 
 * fix JWT client_id check in ApiEndpoint
