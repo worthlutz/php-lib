@@ -3,6 +3,7 @@
 #### v3.4.0
 
 * add endpointName to constructor
+* add protected function getRequiredProperty
 
 #### v3.3.2
 

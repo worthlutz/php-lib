@@ -89,6 +89,16 @@ abstract class ApiEndpoint {
   // protected Functions
   //---------------------------------------------------------------------------
 
+  protected function getRequiredProperty($key) {
+    if (isset($this->post_vars[$key])) {
+      return $this->post_vars[$key];
+    } else {
+      $msg = "[$this->endpointName] Missing required property($key)";
+      throw new \Exception($msg, 400);
+    }
+  }
+
+  //---------------------------------------------------------------------------
   // This function processes the endpoint. It must be extended by the endpoint
   // subclass.
   // IMPORTANT: the extended function MUST call PARENT::processEndpoint()
