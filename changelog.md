@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.4.0
+
+* add endpointName to constructor
+
 #### v3.3.2
 
 * fix type of argument in throwDbException
