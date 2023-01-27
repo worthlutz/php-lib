@@ -2,8 +2,8 @@
 
 #### v3.4.0
 
-* add endpointName to constructor
-* add protected function getRequiredProperty
+* add endpointName to constructor for ApiEndpoint
+* add protected function getRequiredProperty to ApiEndpoint
 
 #### v3.3.2
 
