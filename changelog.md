@@ -1,5 +1,10 @@
 ### changelog for php-lib
 
+#### v3.4.0
+
+* add endpointName to constructor for ApiEndpoint
+* add protected function getRequiredProperty to ApiEndpoint
+
 #### v3.3.2
 
 * fix type of argument in throwDbException

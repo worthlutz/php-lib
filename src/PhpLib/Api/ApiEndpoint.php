@@ -73,20 +73,32 @@ abstract class ApiEndpoint {
    *
    */
   public function __construct($configArray) {
-    $this->configArray = $configArray;
+    $this->endpointName = get_called_class();
+
+    $this->configArray  = $configArray;
     $this->authHeader   = $configArray['authHeader'];
     $this->method       = $configArray['method'];
     $this->args         = $configArray['args'];
     $this->requestBody  = $configArray['requestBody'];
     $this->get_vars     = $configArray['get_vars'];
     $this->post_vars    = $configArray['post_vars'];
-    $this->apiId = $configArray['apiId'];
+    $this->apiId        = $configArray['apiId'];
   }
 
   //---------------------------------------------------------------------------
   // protected Functions
   //---------------------------------------------------------------------------
 
+  protected function getRequiredProperty($key) {
+    if (isset($this->post_vars[$key])) {
+      return $this->post_vars[$key];
+    } else {
+      $msg = "[$this->endpointName] Missing required property($key)";
+      throw new \Exception($msg, 400);
+    }
+  }
+
+  //---------------------------------------------------------------------------
   // This function processes the endpoint. It must be extended by the endpoint
   // subclass.
   // IMPORTANT: the extended function MUST call PARENT::processEndpoint()
