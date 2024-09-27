@@ -1,5 +1,10 @@
 ### changelog for php-lib
 
+#### v3.5.0
+
+* fix Base/Singleton.php to remove warning
+* add PDF map creation code
+
 #### v3.4.0
 
 * add endpointName to constructor for ApiEndpoint
