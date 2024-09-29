@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.5.1
+
+* add missing function to Pdfaps/Mapserver/OlToMapserver
+
 #### v3.5.0
 
 * fix Base/Singleton.php to remove warning
