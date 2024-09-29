@@ -270,7 +270,7 @@ function createLabelObject($olStyle) {
   }
 
   static function createPointLayer($map, $layerDef) {
-    $layer = new \mapObj($map);
+    $layer = new \layerObj($map);
     $layer->set('name', $layerDef->layerName);
     $layer->set('type', MS_LAYER_POINT);
     $layer->set('status', MS_ON);
@@ -282,7 +282,7 @@ function createLabelObject($olStyle) {
   }
 
   static function createLineLayer($map, $layerDef) {
-    $layer = new \mapObj($map);
+    $layer = new \layerObj($map);
     $layer->set('name', $layerDef->layerName);
     $layer->set('type', MS_LAYER_LINE);
     $layer->set('status', MS_ON);
@@ -295,7 +295,7 @@ function createLabelObject($olStyle) {
   }
 
   static function createPolygonLayer($map, $layerDef) {
-    $layer = new \mapObj($map);
+    $layer = new \layerObj($map);
     $layer->set('name', $layerDef->layerName);
     $layer->set('type', MS_LAYER_POLYGON);
     $layer->set('status', MS_ON);
