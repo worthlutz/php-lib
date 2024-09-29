@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.5.3
+
+* fix object pointer in PdfMaps\Mapserver\OlToMapserver
+
 #### v3.5.2
 
 * update PdfMaps\Mapserver\OlToMapserver to new object names
