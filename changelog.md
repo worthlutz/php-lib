@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.5.5
+
+* change call to new layerObj in PdfMaps\Mapserver\OlToMapserver
+
 #### v3.5.4
 
 * fix call to new mapObj in PdfMaps\Mapserver\OlToMapserver
