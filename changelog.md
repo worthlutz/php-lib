@@ -1,8 +1,12 @@
 ### changelog for php-lib
 
+#### v3.5.2
+
+* update PdfMaps\Mapserver\OlToMapserver to new object names
+
 #### v3.5.1
 
-* add missing function to Pdfaps/Mapserver/OlToMapserver
+* add missing function to PdfMaps/Mapserver/OlToMapserver
 
 #### v3.5.0
 
