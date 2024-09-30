@@ -137,14 +137,14 @@ function createLabelObject($olStyle) {
         $style->updateFromString('STYLE SYMBOL "'.$symbolText.'" END');
 
         // TODO: What about graphicWidth? does MapServer just keep aspect ratio?
-        $style->set('size', $olStyle->graphicHeight);
+        $style->size = $olStyle->graphicHeight;
 
         // convert OpenLayers offsets to MapServer offsets
         $offsetX = $olStyle->graphicXOffset + ($olStyle->graphicWidth / 2);
         $offsetY = $olStyle->graphicYOffset + ($olStyle->graphicHeight / 2);
 
-        $style->set('offsetx', $offsetX);
-        $style->set('offsety', $offsetY);
+        $style->offsetx = $offsetX;
+        $style->offsety = $offsetY;
 
       } else {
 
@@ -158,25 +158,27 @@ function createLabelObject($olStyle) {
           $rgb = get_rgb($olStyle->fillColor);
           $style->color->setRGB($rgb[0],$rgb[1],$rgb[2]);
           if (isset($rgb[3])) {
-            $style->set('opacity', (int) (100 * $rgb[3]) );
+            //$style->set('opacity', (int) (100 * $rgb[3]) );
+            $layer->setOpacity( (int) (100 * $rgb[3]) );
           }
         }
 
         $style->updateFromString('STYLE SYMBOL "'.$symbolName.'" END');
         if (isset($olStyle->radius)) {
-          $style->set('size', $olStyle->radius * 2);
+          $style->size = $olStyle->radius * 2;
         }
 
         if (isset($olStyle->strokeColor)) {
           $rgb = get_rgb($olStyle->strokeColor);
           $style->outlinecolor->setRGB($rgb[0],$rgb[1],$rgb[2]);
           if (isset($rgb[3])) {
-            $style->set('opacity', (int) (100 * $rgb[3]) );
+            //$style->set('opacity', (int) (100 * $rgb[3]) );
+            $layer->setOpacity( (int) (100 * $rgb[3]) );
           }
         }
 
         if (isset($olStyle->strokeWidth)) {
-          $style->set('width', $olStyle->strokeWidth);
+          $style->width = $olStyle->strokeWidth;
         }
       }
 
@@ -191,28 +193,30 @@ function createLabelObject($olStyle) {
         $rgb = get_rgb($olStyle->strokeColor);
         $style->color->setRGB($rgb[0],$rgb[1],$rgb[2]);
         if (isset($rgb[3])) {
-          $style->set('opacity', (int) (100 * $rgb[3]) );
+          //$style->set('opacity', (int) (100 * $rgb[3]) );
+          $layer->setOpacity( (int) (100 * $rgb[3]) );
         }
       }
 
       if (isset($olStyle->strokeWidth)) {
-        $style->set('width', $olStyle->strokeWidth);
+        $style->width = $olStyle->strokeWidth;
       }
 
       // opacity: MapServer 0-100  -  OpenLayers 0-1
       if (isset($olStyle->strokeOpacity)) {
-        $style->set('opacity', (int) (100 * $olStyle->strokeOpacity) );
+        //$style->set('opacity', (int) (100 * $olStyle->strokeOpacity) );
+        $layer->setOpacity( (int) (100 * $olStyle->strokeOpacity) );
       }
 
       if (isset($olStyle->strokeLinecap)) {
-        $style->set('linecap', $olStyle->strokeLinecap);
+        $style->linecap = $olStyle->strokeLinecap;
       }
 
       //TODO:  FIX THE FOLLOWING...
       if (isset($olStyle->strokeDashstyle)) {
       }
 
-      //$style->set('size', 15);
+      //$style->size = 15;
 
       if (isset($olStyle->label) and $olStyle->label === TRUE) {
         $label = createLabelObject($olStyle);
@@ -225,13 +229,15 @@ function createLabelObject($olStyle) {
         $rgb = get_rgb($olStyle->fill);
         $style->color->setRGB($rgb[0],$rgb[1],$rgb[2]);
         if (isset($rgb[3])) {
-          $style->set('opacity', (int) (100 * $rgb[3]) );
+          //$style->set('opacity', (int) (100 * $rgb[3]) );
+          $layer->setOpacity( (int) (100 * $rgb[3]) );
         }
       }
 
       // opacity: MapServer 0-100  -  OpenLayers 0-1
       if (isset($olStyle->fillOpacity)) {
-          $style->set('opacity', (int) (100 * $olStyle->fillOpacity) );
+          //$style->set('opacity', (int) (100 * $olStyle->fillOpacity) );
+          $layer->setOpacity( (int) (100 * $olStyle->fillOpacity) );
       }
 
       // ++ create outline style ++
@@ -255,7 +261,7 @@ function createLabelObject($olStyle) {
       }
 
       if (isset($olStyle->strokeLinecap)) {
-        $style2->set('linecap', $olStyle->strokeLinecap);
+        $style2->linecap = $olStyle->strokeLinecap;
       }
 
       //TODO:  FIX THE FOLLOWING...
@@ -271,10 +277,10 @@ function createLabelObject($olStyle) {
 
   static function createPointLayer($map, $layerDef) {
     $layer = new \layerObj($map);
-    $layer->set('name', $layerDef->layerName);
-    $layer->set('type', MS_LAYER_POINT);
-    $layer->set('status', MS_ON);
-    //$layer->set('sizeunits', MS_FEET);
+    $layer->name = $layerDef->layerName;
+    $layer->type = \mapscript::MS_LAYER_POINT;
+    $layer->status = \mapscript::MS_ON;
+    //$layer->sizeunits = \mapscript::MS_FEET;
 
     SELF::addClass($layer, 'POINT', $layerDef->style);
 
@@ -283,11 +289,11 @@ function createLabelObject($olStyle) {
 
   static function createLineLayer($map, $layerDef) {
     $layer = new \layerObj($map);
-    $layer->set('name', $layerDef->layerName);
-    $layer->set('type', MS_LAYER_LINE);
-    $layer->set('status', MS_ON);
-    //$layer->set('sizeunits', MS_FEET);
-    $layer->set('labelitem', 'label');
+    $layer->name = $layerDef->layerName;
+    $layer->type = \mapscript::MS_LAYER_LINE;
+    $layer->status = \mapscript::MS_ON;
+    //$layer->sizeunits = \mapscript::MS_FEET;
+    $layer->labelitem = 'label';
 
     SELF::addClass($layer, 'LINESTRING', $layerDef->style);
 
@@ -296,10 +302,10 @@ function createLabelObject($olStyle) {
 
   static function createPolygonLayer($map, $layerDef) {
     $layer = new \layerObj($map);
-    $layer->set('name', $layerDef->layerName);
-    $layer->set('type', MS_LAYER_POLYGON);
-    $layer->set('status', MS_ON);
-    //$layer->set('sizeunits', MS_FEET);
+    $layer->name = $layerDef->layerName;
+    $layer->type = \mapscript::MS_LAYER_POLYGON;
+    $layer->status = \mapscript::MS_ON;
+    //$layer->sizeunits = \mapscript::MS_FEET;
 
     SELF::addClass($layer, 'POLYGON', $layerDef->style);
 

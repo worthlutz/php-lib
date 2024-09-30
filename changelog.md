@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.5.6
+
+* changes to SWIG Mapscript 
+
 #### v3.5.5
 
 * change call to new layerObj in PdfMaps\Mapserver\OlToMapserver
