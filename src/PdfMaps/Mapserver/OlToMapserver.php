@@ -123,7 +123,7 @@ function createLabelObject($olStyle) {
 
         // This method was first used
         // removed because of problems with JC & "https"
-        //$symbolText = $_SERVER['HTTP_REFERER'].$layerDef->style->externalGraphic;
+        //$symbolText = $_SERVER['HTTP_REFERER'].$layerDef['style']->externalGraphic;
 
         //  images must be put into the mapfile symbols directory
         //  TODO: remove hard coded path "markers" and determine system which
@@ -270,37 +270,37 @@ function createLabelObject($olStyle) {
 
   static function createPointLayer($map, $layerDef) {
     $layer = new \layerObj($map);
-    $layer->name = $layerDef->layerName;
+    $layer->name = $layerDef['layerName'];
     $layer->type = \mapscript::MS_LAYER_POINT;
     $layer->status = \mapscript::MS_ON;
     //$layer->sizeunits = \mapscript::MS_FEET;
 
-    SELF::addClass($layer, 'POINT', $layerDef->style);
+    SELF::addClass($layer, 'POINT', $layerDef['style']);
 
     return $layer;
   }
 
   static function createLineLayer($map, $layerDef) {
     $layer = new \layerObj($map);
-    $layer->name = $layerDef->layerName;
+    $layer->name = $layerDef['layerName'];
     $layer->type = \mapscript::MS_LAYER_LINE;
     $layer->status = \mapscript::MS_ON;
     //$layer->sizeunits = \mapscript::MS_FEET;
     $layer->labelitem = 'label';
 
-    SELF::addClass($layer, 'LINESTRING', $layerDef->style);
+    SELF::addClass($layer, 'LINESTRING', $layerDef['style']);
 
     return $layer;
   }
 
   static function createPolygonLayer($map, $layerDef) {
     $layer = new \layerObj($map);
-    $layer->name = $layerDef->layerName;
+    $layer->name = $layerDef['layerName'];
     $layer->type = \mapscript::MS_LAYER_POLYGON;
     $layer->status = \mapscript::MS_ON;
     //$layer->sizeunits = \mapscript::MS_FEET;
 
-    SELF::addClass($layer, 'POLYGON', $layerDef->style);
+    SELF::addClass($layer, 'POLYGON', $layerDef['style']);
 
     return $layer;
   }
