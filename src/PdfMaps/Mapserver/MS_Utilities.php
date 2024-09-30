@@ -60,12 +60,12 @@ class MS_Utilities {
 
     // ++++ turnOffLayerOrGroup +++++++++++++++++++++++++++++++++++++++++++++++++
     static function turnOffLayerOrGroup(&$map, $layerName) {
-        self::setLayerStatus($map, $layerName, MS_OFF);
+        self::setLayerStatus($map, $layerName, \mapscript::MS_OFF);
     }
 
     // ++++ turnOnLayerOrGroup +++++++++++++++++++++++++++++++++++++++++++++++++
     static function turnOnLayerOrGroup(&$map, $layerName) {
-        self::setLayerStatus($map, $layerName, MS_ON);
+        self::setLayerStatus($map, $layerName, \mapscript::MS_ON);
     }
 
     // ++++ setLayerStatus +++++++++++++++++++++++++++++++++++++++++++++++++++
