@@ -1,8 +1,12 @@
 ### changelog for php-lib
 
+#### v3.5.7
+
+* more changes for SWIG Mapscript 
+
 #### v3.5.6
 
-* changes to SWIG Mapscript 
+* changes for SWIG Mapscript 
 
 #### v3.5.5
 
