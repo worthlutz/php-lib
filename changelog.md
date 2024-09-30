@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.5.8
+
+* fix layerDef problem
+
 #### v3.5.7
 
 * more changes for SWIG Mapscript 
