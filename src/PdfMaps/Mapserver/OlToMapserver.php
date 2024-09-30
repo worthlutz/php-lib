@@ -44,21 +44,18 @@ function get_rgb($olColor) {
 }
 
 function createLabelObject($olStyle) {
-  $label = new labelObj();
+  $label = new \labelObj();
+
 
   // font
-  try {
-    $label->set('type', 'trutype' );
-  } catch (Exception $e) {
-    // do nothing here
-  }
 
-  $label->set('font', 'vera');
-  $label->set('anglemode', 'auto');
+  $label->font = 'vera';
+  $label->autoangle = \mapscript::MS_TRUE;
+  $label->autofollow = \mapscript::MS_TRUE;
 
   if (isset($olStyle->fontSize)) {
     $size = (int) (0.5 * $olStyle->fontSize);
-    $label->set('size', $size);
+    $label->size = $size;
   }
 
   if (isset($olStyle->fontFillColor)) {
@@ -72,19 +69,19 @@ function createLabelObject($olStyle) {
   }
 
   if (isset($olStyle->fontStrokeWidth)) {
-    $label->set('outlinewidth', $olStyle->fontStrokeWidth);
+    $label->outlinewidth = $olStyle->fontStrokeWidth;
   }
 
   if (isset($olStyle->textAlign)) {
     switch ($olStyle->textAlign) {
 
       case 'left':  // text right of point
-        $label->set('position', 'cr');
+        $label->position = 'cr';
         break;
 
       case 'right':  // text left of point
         // this does not work (see offsetx calc in MS_Pdf)
-        //$label->set('position', 'cl');
+        //$label->position = 'cl';
         break;
 
       default:
@@ -94,15 +91,15 @@ function createLabelObject($olStyle) {
   }
 
   if (isset($olStyle->labelXOffset)) {
-    //$label->set('offsetx', $olStyle->labelXOffset);
+    //$labeloffsetx = $olStyle->labelXOffset;
     //
   }
   if (isset($olStyle->labelYOffset)) {
-    $label->set('offsety', -$olStyle->labelYOffset);
+    $label->offsety = -$olStyle->labelYOffset;
   }
 
   // in case markers are too close together this will force all to have labels
-  $label->set('force', TRUE);
+  $label->force = \mapscript::MC_TRUE;
   return $label;
 }
 
@@ -116,9 +113,9 @@ function createLabelObject($olStyle) {
   static function addClass(&$layer, $geomType, $olStyle) {
     //var_dump($olStyle);
 
-    $class = new classObj($layer);
-    $class->set('name', 'class name');  // TODO: figure out for legend??
-    $style = new styleObj($class);
+    $class = new \classObj($layer);
+    $class->name = 'class name';      // TODO: figure out for legend??
+    $style = new \styleObj($class);
 
     if ($geomType === 'POINT') {
 
@@ -158,7 +155,6 @@ function createLabelObject($olStyle) {
           $rgb = get_rgb($olStyle->fillColor);
           $style->color->setRGB($rgb[0],$rgb[1],$rgb[2]);
           if (isset($rgb[3])) {
-            //$style->set('opacity', (int) (100 * $rgb[3]) );
             $layer->setOpacity( (int) (100 * $rgb[3]) );
           }
         }
@@ -172,7 +168,6 @@ function createLabelObject($olStyle) {
           $rgb = get_rgb($olStyle->strokeColor);
           $style->outlinecolor->setRGB($rgb[0],$rgb[1],$rgb[2]);
           if (isset($rgb[3])) {
-            //$style->set('opacity', (int) (100 * $rgb[3]) );
             $layer->setOpacity( (int) (100 * $rgb[3]) );
           }
         }
@@ -193,7 +188,6 @@ function createLabelObject($olStyle) {
         $rgb = get_rgb($olStyle->strokeColor);
         $style->color->setRGB($rgb[0],$rgb[1],$rgb[2]);
         if (isset($rgb[3])) {
-          //$style->set('opacity', (int) (100 * $rgb[3]) );
           $layer->setOpacity( (int) (100 * $rgb[3]) );
         }
       }
@@ -204,7 +198,6 @@ function createLabelObject($olStyle) {
 
       // opacity: MapServer 0-100  -  OpenLayers 0-1
       if (isset($olStyle->strokeOpacity)) {
-        //$style->set('opacity', (int) (100 * $olStyle->strokeOpacity) );
         $layer->setOpacity( (int) (100 * $olStyle->strokeOpacity) );
       }
 
@@ -229,19 +222,17 @@ function createLabelObject($olStyle) {
         $rgb = get_rgb($olStyle->fill);
         $style->color->setRGB($rgb[0],$rgb[1],$rgb[2]);
         if (isset($rgb[3])) {
-          //$style->set('opacity', (int) (100 * $rgb[3]) );
           $layer->setOpacity( (int) (100 * $rgb[3]) );
         }
       }
 
       // opacity: MapServer 0-100  -  OpenLayers 0-1
       if (isset($olStyle->fillOpacity)) {
-          //$style->set('opacity', (int) (100 * $olStyle->fillOpacity) );
           $layer->setOpacity( (int) (100 * $olStyle->fillOpacity) );
       }
 
       // ++ create outline style ++
-      $style2 = new styleObj($class);
+      $style2 = new \styleObj($class);
 
       if (isset($olStyle->strokeColor)) {
         $rgb = get_rgb($olStyle->strokeColor);
@@ -251,13 +242,15 @@ function createLabelObject($olStyle) {
       // opacity: MapServer 0-100  -  OpenLayers 0-1
       // overides opacity set from strokeColor
       if (isset($olStyle->strokeOpacity)) {
-        $style2->set('opacity', (int) (100 * $olStyle->strokeOpacity));
+        //$style2->set('opacity', (int) (100 * $olStyle->strokeOpacity));
+        $layer->setOpacity( (int) (100 * $olStyle->strokeOpacity) );
       } else {
-        $style2->set('opacity', 100);
+        //$style2->set('opacity', 100);
+        $layer->setOpacity(100);
       }
 
       if (isset($olStyle->strokeWidth)) {
-        $style2->set('width', $olStyle->strokeWidth);
+        $style2->width = $olStyle->strokeWidth;
       }
 
       if (isset($olStyle->strokeLinecap)) {
