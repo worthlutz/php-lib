@@ -3,6 +3,8 @@
 #### v3.6.0
 
 * make get_vars available to all http methods
+* changes for MapServer V8.0
+* changes for object to array changes
 
 #### v3.5.8
 

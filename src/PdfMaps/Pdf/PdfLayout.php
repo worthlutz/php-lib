@@ -29,61 +29,55 @@ abstract class PdfLayout extends Pdf {
 
     public function __construct($options) {
 
-        $this->originalOptions = $options;
+      $this->originalOptions = $options;
 
-        $pdfFormat = isset($options->pdfFormat) ? $options->pdfFormat : new \StdClass();
-
-        // set defaults
-        //$orientation = isset($options->orientation) ? $options->orientation : 'L';
-
-        if (!isset($pdfFormat->orientation)) {
-            $this->orientation = 'L';
-        } else if ($pdfFormat->orientation != 'A') {
-            $this->orientation = $pdfFormat->orientation;
-        } else if (isset($options->mapDetails->bounds)) {
-            $this->orientation = self::determineOrientation($options->mapDetails->bounds);
+      // set defaults
+      if (isset($options['orientation'])) {
+        if ($options['orientation'] != 'A') {
+          $this->orientation = $options['orientation'];
         } else {
-            $this->orientation = 'L';
+          $this->orientation = self::determineOrientation($options['mapDetails']['bounds']);
         }
+      } else {
+        $this->orientation = 'L';
+      }
 
-        $this->paperSize = isset($pdfFormat->paperSize) ? $pdfFormat->paperSize : 'ANSI_A';
-        $this->units =     isset($pdfFormat->units)     ? $pdfFormat->units     : 'in';
+      $this->paperSize = isset($options['paperSize']) ? $options['paperSize'] : 'ANSI_A';
+      $this->units =     isset($options['units'])     ? $options['units']     : 'in';
 
-        $this->zoom =      isset($pdfFormat->zoom)      ? $pdfFormat->zoom      : 'fullpage';
-        $this->layout =    isset($pdfFormat->layout)    ? $pdfFormat->layout    : 'SinglePage';
-        $this->mode =      isset($pdfFormat->mode)      ? $pdfFormat->mode      : 'UseThumbs';
+      $this->zoom =      isset($options['zoom'])      ? $options['zoom']      : 'fullpage';
+      $this->layout =    isset($options['layout'])    ? $options['layout']    : 'SinglePage';
+      $this->mode =      isset($options['mode'])      ? $options['mode']      : 'UseThumbs';
 
-        parent::__construct($this->orientation, $this->units, $this->paperSize);
+      parent::__construct($this->orientation, $this->units, $this->paperSize);
 
-        switch ($this->paperSize) {
-          case 'ANSI_E':
-            $this->sizeFactor = 4;
-            break;
-          case 'ANSI_D':  // fallthrough on purpose
-          case 'ANSI_C':
-            $this->sizeFactor = 2;
-            break;
-          case 'ANSI_B':  // fallthrough to default on purpose
-          case 'ANSI_A':  // fallthrough to default on purpose
-          default:
-            $this->sizeFactor = 1;
-            break;
-        }
+      switch ($this->paperSize) {
+        case 'ANSI_E':
+          $this->sizeFactor = 4;
+          break;
+        case 'ANSI_D':  // fallthrough on purpose
+        case 'ANSI_C':
+          $this->sizeFactor = 2;
+          break;
+        case 'ANSI_B':  // fallthrough to default on purpose
+        case 'ANSI_A':  // fallthrough to default on purpose
+        default:
+          $this->sizeFactor = 1;
+          break;
+      }
 
-        $this->SetDisplayMode($this->zoom, $this->layout, $this->mode);
+      $this->SetDisplayMode($this->zoom, $this->layout, $this->mode);
 
-        // these margins are for the pdf code calculations
-        // will not write outside of these
-        $this->setMargins(0.1,0.1,0.1);      // this is Top, Left, Right margins
-        $this->SetAutoPageBreak(TRUE, 0.0);  // this is bottom margin
+      // these margins are for the pdf code calculations
+      // will not write outside of these
+      $this->setMargins(0.1,0.1,0.1);      // this is Top, Left, Right margins
+      $this->SetAutoPageBreak(TRUE, 0.0);  // this is bottom margin
 
-        $this->setPrintHeader(FALSE);  // tcpdf settings...
-        $this->setPrintFooter(FALSE);
+      $this->setPrintHeader(FALSE);  // tcpdf settings...
+      $this->setPrintFooter(FALSE);
     }
 
-    //
     // override this function if map shape in layout is not related to paper orientation
-    //
     public function determineOrientation($bounds) {
         // determine if landscape or portrait view
         $deltaX = $bounds[2] - $bounds[0];
