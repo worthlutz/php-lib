@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v3.6.0
+
+* make get_vars available to all http methods
+
 #### v3.5.8
 
 * fix layerDef problem

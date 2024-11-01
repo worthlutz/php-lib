@@ -116,6 +116,8 @@ class Api {
     // pre-process inputs
     $this->requestBody = file_get_contents('php://input');
 
+    $this->get_vars = $this->_cleanInputs($_GET);
+
     switch($this->method) {
       case 'DELETE':
       case 'PATCH':
@@ -131,7 +133,7 @@ class Api {
         break;
 
       case 'GET':
-        $this->get_vars = $this->_cleanInputs($_GET);
+        //$this->get_vars = $this->_cleanInputs($_GET);
         break;
 
       default:
