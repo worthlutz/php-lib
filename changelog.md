@@ -5,6 +5,7 @@
 * make get_vars available to all http methods
 * changes for MapServer V8.0
 * changes for object to array changes
+* add getColumnDataTypes and getValueString methods to Pg_Db
 
 #### v3.5.8
 
