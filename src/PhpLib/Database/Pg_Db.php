@@ -73,5 +73,80 @@ abstract class Pg_Db extends Db {
       }
     }
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  protected function getColumnDataTypes($tableName) {
+    $sql = "
+        SELECT column_name, data_type
+        FROM information_schema.columns
+        WHERE table_name='$tableName'
+    ";
+    //echo "sql = $sql";
+
+    $dataTypes = array();
+
+    $this->query($sql);
+    while ($r = $this->fetch_assoc()) {    // new db class
+        $dataTypes[$r['column_name']] = $r['data_type'];
+    }
+    return $dataTypes;
+  }
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  protected function getValueString($columnType, $value, $operator = NULL) {
+    $truncatedType = substr($columnType, 0, 7);
+
+    switch ($truncatedType) {
+        case 'boolean':
+            if ($value) {
+                $string = '$$t$$';
+            } else {
+                $string = '$$f$$';
+            }
+            break;
+
+        case 'bigint':
+        case 'integer':
+        case 'numeric':
+        case 'smallin':
+            if (!is_int($value)) {
+                $string = 'DEFAULT';
+            } else {
+                $string = $value;
+            }
+            break;
+
+        case 'timesta':
+        case 'date':
+            if (!$value) {
+                $string = "DEFAULT";
+            } else {
+                $string = "$$".$value."$$";
+            }
+            break;
+
+        case 'text':
+        case 'charact':
+            if (is_null($operator) OR $operator == '=') {
+                //$string = "$$".$value."$$";
+                $string = "$$".trim($value)."$$";
+            } else {
+                $string = "$$%".trim($value)."%$$";
+            }
+            break;
+
+        default:
+            $string = "xxx BAD TYPE($columnType - $truncatedType ) IN getValueString! xxx";
+            break;
+    }
+
+    //echo " truncatedType = $truncatedType  value = $value \n";
+    //echo " truncatedType = $truncatedType  value = $string \n";
+
+    return $string;
+  }
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
 ?>
