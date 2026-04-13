@@ -47,10 +47,9 @@ function createLabelObject($olStyle) {
   $label = new \labelObj();
 
   // font
-
   $label->font = 'vera';
-  $label->autoangle = \mapscript::MS_TRUE;
-  $label->autofollow = \mapscript::MS_TRUE;
+
+  $label->anglemode = \mapscript::MS_AUTO;
 
   if (isset($olStyle['fontSize'])) {
     $size = (int) (0.5 * $olStyle['fontSize']);
@@ -178,8 +177,7 @@ function createLabelObject($olStyle) {
         }
       }
 
-      //if (isset($olStyle['label']) and $olStyle['label'] === TRUE) {
-      if (isset($olStyle['label'])) {
+      if (isset($olStyle['label']) and $olStyle['label'] == TRUE) {
         $label = createLabelObject($olStyle);
         $class->addLabel($label);
       }
@@ -214,7 +212,7 @@ function createLabelObject($olStyle) {
 
       //$style->size = 15;
 
-      if (isset($olStyle['label']) and $olStyle['label'] === TRUE) {
+      if (isset($olStyle['label']) and $olStyle['label'] == TRUE) {
         $label = createLabelObject($olStyle);
         $class->addLabel($label);
       }
@@ -280,7 +278,7 @@ function createLabelObject($olStyle) {
       if (isset($olStyle['strokeDashstyle'])) {
       }
 
-      if (isset($olStyle['label']) and $olStyle['label'] === TRUE) {
+      if (isset($olStyle['label']) and $olStyle['label'] == TRUE) {
         $label = createLabelObject($olStyle);
         $class->addLabel($label);
       }
@@ -333,7 +331,6 @@ function createLabelObject($olStyle) {
       $class->addLabel($label);
     }
     // **************************************
-
     return $layer;
   }
 
