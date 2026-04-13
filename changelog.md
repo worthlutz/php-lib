@@ -1,5 +1,9 @@
 ### changelog for php-lib
 
+#### v4.0.1
+
+* fix label problem in OlToMapServer.php
+
 #### v4.0.0
 
 * changes for MapServer V8
